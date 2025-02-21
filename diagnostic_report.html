@@ -34,59 +34,92 @@
     <table class="table-container">
         <tr>
             <th>门诊或住院号：</th>
-            <td></td>
+            <td id="patient-id"></td>
             <th>报告号：</th>
-            <td></td>
+            <td id="report-id"></td>
             <th>标本检测日期：</th>
-            <td></td>
+            <td id="sample-date"></td>
         </tr>
         <tr>
             <th>患者姓名：</th>
-            <td></td>
+            <td id="patient-name"></td>
             <th>性别：</th>
-            <td></td>
+            <td id="gender"></td>
             <th>检查次数：</th>
-            <td></td>
+            <td id="exam-count"></td>
         </tr>
         <tr>
             <th>科别：</th>
-            <td></td>
+            <td id="department"></td>
             <th>病房：</th>
-            <td></td>
+            <td id="ward"></td>
             <th>床号：</th>
-            <td></td>
+            <td id="bed-number"></td>
         </tr>
         <tr>
             <th>送检组织：</th>
-            <td></td>
+            <td id="sample-tissue"></td>
             <th>电话：</th>
-            <td></td>
+            <td id="phone"></td>
         </tr>
         <tr>
             <th>临床诊断：</th>
-            <td colspan="5"></td>
+            <td colspan="5" id="clinical-diagnosis"></td>
         </tr>
         <tr>
             <th>检查方法：</th>
-            <td colspan="5"></td>
+            <td colspan="5" id="exam-method"></td>
         </tr>
         <tr>
             <th>病理诊断：</th>
-            <td colspan="5"></td>
+            <td colspan="5" id="pathological-diagnosis"></td>
         </tr>
         <tr>
             <th>诊断结论：</th>
-            <td colspan="5"></td>
+            <td colspan="5" id="diagnosis-conclusion"></td>
         </tr>
         <tr>
             <th>报告医生：</th>
-            <td></td>
+            <td id="report-doctor"></td>
             <th>复核医生：</th>
-            <td></td>
+            <td id="review-doctor"></td>
             <th>数据：</th>
-            <td></td>
+            <td id="data"></td>
         </tr>
     </table>
+
+    <script>
+        // 获取URL查询参数
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');  // 获取`code`参数
+
+        // 根据`code`参数来填充报告内容
+        if (code) {
+            // 假设code参数决定了不同的报告数据
+            document.getElementById("patient-id").innerText = `P-${code}`;
+            document.getElementById("report-id").innerText = `R-${code}`;
+            document.getElementById("sample-date").innerText = "2023-02-21";  // 示例数据
+            document.getElementById("patient-name").innerText = `患者${code}`;
+            document.getElementById("gender").innerText = "男";
+            document.getElementById("exam-count").innerText = "1";
+            document.getElementById("department").innerText = "内科";
+            document.getElementById("ward").innerText = "病房" + code;
+            document.getElementById("bed-number").innerText = code;
+            document.getElementById("sample-tissue").innerText = "组织" + code;
+            document.getElementById("phone").innerText = "123456789" + code;
+            document.getElementById("clinical-diagnosis").innerText = "临床诊断内容 " + code;
+            document.getElementById("exam-method").innerText = "检查方法 " + code;
+            document.getElementById("pathological-diagnosis").innerText = "病理诊断 " + code;
+            document.getElementById("diagnosis-conclusion").innerText = "诊断结论 " + code;
+            document.getElementById("report-doctor").innerText = "医生" + code;
+            document.getElementById("review-doctor").innerText = "复核医生" + code;
+            document.getElementById("data").innerText = "数据" + code;
+        } else {
+            // 如果没有`code`参数，显示默认内容
+            document.getElementById("patient-id").innerText = "默认ID";
+            document.getElementById("report-id").innerText = "默认报告号";
+        }
+    </script>
 
 </body>
 </html>
