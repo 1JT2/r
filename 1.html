@@ -3,71 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>诊断报告</title>
+    <title>病理组织诊断报告</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 40px;
-            font-size: 18px;
+            margin: 20px;
+            background-color: #f9f9f9;
         }
 
         h1, h2 {
             text-align: center;
+            margin: 10px 0;
         }
 
-        .table-wrapper {
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
+        .info-block {
+            background: #fff;
+            margin-bottom: 12px;
+            padding: 15px 12px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
 
-        .table-container {
-            width: 100%;
-            border-collapse: collapse;
+        .info-block strong {
+            display: inline-block;
+            min-width: 100px;
+            color: #555;
         }
 
-        .table-container th, .table-container td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: left;
+        .info-line {
+            margin: 5px 0;
         }
 
-        .table-container th {
-            background-color: #f2f2f2;
-        }
-
-        /* ✅ 手机端优化：竖排展示 */
-        @media screen and (max-width: 768px) {
+        @media screen and (max-width: 480px) {
             body {
-                margin: 10px;
                 font-size: 16px;
-            }
-
-            h1, h2 {
-                font-size: 20px;
-            }
-
-            .table-container, 
-            .table-container thead, 
-            .table-container tbody, 
-            .table-container tr, 
-            .table-container th, 
-            .table-container td {
-                display: block;
-                width: 100%;
-            }
-
-            .table-container tr {
-                margin-bottom: 15px;
-                border-bottom: 2px solid #ccc;
-            }
-
-            .table-container th {
-                background-color: #f9f9f9;
-                font-weight: bold;
-            }
-
-            .table-container td {
-                border-top: none;
             }
         }
     </style>
@@ -77,63 +46,49 @@
     <h1>×××××××××医院</h1>
     <h2>病理组织诊断报告</h2>
 
-    <div class="table-wrapper">
-    <table class="table-container">
-        <tr>
-            <th>门诊或住院号：</th>
-            <td id="patient-id"></td>
-            <th>报告号：</th>
-            <td id="report-id"></td>
-            <th>标本检测日期：</th>
-            <td id="sample-date"></td>
-        </tr>
-        <tr>
-            <th>患者姓名：</th>
-            <td id="patient-name"></td>
-            <th>性别：</th>
-            <td id="gender"></td>
-            <th>检查次数：</th>
-            <td id="exam-count"></td>
-        </tr>
-        <tr>
-            <th>科别：</th>
-            <td id="department"></td>
-            <th>病房：</th>
-            <td id="ward"></td>
-            <th>床号：</th>
-            <td id="bed-number"></td>
-        </tr>
-        <tr>
-            <th>送检组织：</th>
-            <td id="sample-tissue"></td>
-            <th>电话：</th>
-            <td id="phone"></td>
-        </tr>
-        <tr>
-            <th>临床诊断：</th>
-            <td colspan="5" id="clinical-diagnosis"></td>
-        </tr>
-        <tr>
-            <th>检查方法：</th>
-            <td colspan="5" id="exam-method"></td>
-        </tr>
-        <tr>
-            <th>病理诊断：</th>
-            <td colspan="5" id="pathological-diagnosis"></td>
-        </tr>
-        <tr>
-            <th>诊断结论：</th>
-            <td colspan="5" id="diagnosis-conclusion"></td>
-        </tr>
-        <tr>
-            <th>报告医生：</th>
-            <td id="report-doctor"></td>
-            <th>复核医生：</th>
-            <td id="review-doctor"></td>
-            <th>数据：</th>
-            <td id="data"></td>
-        </tr>
-    </table>
+    <div class="info-block">
+        <div class="info-line"><strong>门诊/住院号：</strong><span id="patient-id"></span></div>
+        <div class="info-line"><strong>报告号：</strong><span id="report-id"></span></div>
+        <div class="info-line"><strong>标本日期：</strong><span id="sample-date"></span></div>
+    </div>
+
+    <div class="info-block">
+        <div class="info-line"><strong>姓名：</strong><span id="patient-name"></span></div>
+        <div class="info-line"><strong>性别：</strong><span id="gender"></span></div>
+        <div class="info-line"><strong>检查次数：</strong><span id="exam-count"></span></div>
+    </div>
+
+    <div class="info-block">
+        <div class="info-line"><strong>科别：</strong><span id="department"></span></div>
+        <div class="info-line"><strong>病房：</strong><span id="ward"></span></div>
+        <div class="info-line"><strong>床号：</strong><span id="bed-number"></span></div>
+    </div>
+
+    <div class="info-block">
+        <div class="info-line"><strong>送检组织：</strong><span id="sample-tissue"></span></div>
+        <div class="info-line"><strong>电话：</strong><span id="phone"></span></div>
+    </div>
+
+    <div class="info-block">
+        <div class="info-line"><strong>临床诊断：</strong><br><span id="clinical-diagnosis"></span></div>
+    </div>
+
+    <div class="info-block">
+        <div class="info-line"><strong>检查方法：</strong><br><span id="exam-method"></span></div>
+    </div>
+
+    <div class="info-block">
+        <div class="info-line"><strong>病理诊断：</strong><br><span id="pathological-diagnosis"></span></div>
+    </div>
+
+    <div class="info-block">
+        <div class="info-line"><strong>诊断结论：</strong><br><span id="diagnosis-conclusion"></span></div>
+    </div>
+
+    <div class="info-block">
+        <div class="info-line"><strong>报告医生：</strong><span id="report-doctor"></span></div>
+        <div class="info-line"><strong>复核医生：</strong><span id="review-doctor"></span></div>
+        <div class="info-line"><strong>数据：</strong><span id="data"></span></div>
     </div>
 
     <script>
