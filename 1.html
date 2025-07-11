@@ -8,21 +8,67 @@
         body {
             font-family: Arial, sans-serif;
             margin: 40px;
+            font-size: 18px;
         }
-        h1 {
+
+        h1, h2 {
             text-align: center;
         }
+
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
         .table-container {
             width: 100%;
             border-collapse: collapse;
         }
+
         .table-container th, .table-container td {
             border: 1px solid #ddd;
             padding: 10px;
             text-align: left;
         }
+
         .table-container th {
             background-color: #f2f2f2;
+        }
+
+        /* ✅ 手机端优化：竖排展示 */
+        @media screen and (max-width: 768px) {
+            body {
+                margin: 10px;
+                font-size: 16px;
+            }
+
+            h1, h2 {
+                font-size: 20px;
+            }
+
+            .table-container, 
+            .table-container thead, 
+            .table-container tbody, 
+            .table-container tr, 
+            .table-container th, 
+            .table-container td {
+                display: block;
+                width: 100%;
+            }
+
+            .table-container tr {
+                margin-bottom: 15px;
+                border-bottom: 2px solid #ccc;
+            }
+
+            .table-container th {
+                background-color: #f9f9f9;
+                font-weight: bold;
+            }
+
+            .table-container td {
+                border-top: none;
+            }
         }
     </style>
 </head>
@@ -31,6 +77,7 @@
     <h1>×××××××××医院</h1>
     <h2>病理组织诊断报告</h2>
 
+    <div class="table-wrapper">
     <table class="table-container">
         <tr>
             <th>门诊或住院号：</th>
@@ -87,18 +134,16 @@
             <td id="data"></td>
         </tr>
     </table>
+    </div>
 
     <script>
-        // 获取URL查询参数
         const urlParams = new URLSearchParams(window.location.search);
-        const code = urlParams.get('code');  // 获取`code`参数
+        const code = urlParams.get('code');
 
-        // 根据`code`参数来填充报告内容
         if (code) {
-            // 假设code参数决定了不同的报告数据
             document.getElementById("patient-id").innerText = `P-${code}`;
             document.getElementById("report-id").innerText = `R-${code}`;
-            document.getElementById("sample-date").innerText = "2023-02-21";  // 示例数据
+            document.getElementById("sample-date").innerText = "2023-02-21";
             document.getElementById("patient-name").innerText = `患者${code}`;
             document.getElementById("gender").innerText = "男";
             document.getElementById("exam-count").innerText = "1";
@@ -115,7 +160,6 @@
             document.getElementById("review-doctor").innerText = "复核医生" + code;
             document.getElementById("data").innerText = "数据" + code;
         } else {
-            // 如果没有`code`参数，显示默认内容
             document.getElementById("patient-id").innerText = "默认ID";
             document.getElementById("report-id").innerText = "默认报告号";
         }
