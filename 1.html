@@ -1,437 +1,124 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>病理组织诊断报告</title>
-  <style>
-    :root{
-      --bg:#f6f7fb;
-      --card:#ffffff;
-      --text:#111827;
-      --muted:#6b7280;
-      --line:#e5e7eb;
-      --accent:#2563eb;
-      --danger:#dc2626;
-    }
-    *{box-sizing:border-box}
-    body{
-      font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
-      margin:0;
-      background:var(--bg);
-      color:var(--text);
-    }
-    .wrap{
-      max-width: 980px;
-      margin: 0 auto;
-      padding: 16px;
-    }
-    header{
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 14px 14px;
-      display:flex;
-      gap:12px;
-      justify-content:space-between;
-      align-items:center;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-      position: sticky;
-      top: 10px;
-      z-index: 5;
-    }
-    .brand{
-      display:flex; flex-direction:column; gap:4px;
-    }
-    .brand h1{
-      font-size: 16px;
-      margin:0;
-      font-weight:700;
-      letter-spacing:0.2px;
-    }
-    .brand .sub{
-      font-size: 12px;
-      color: var(--muted);
-    }
-    .actions{
-      display:flex; gap:8px; flex-wrap:wrap;
-    }
-    button{
-      border:1px solid var(--line);
-      background:#fff;
-      border-radius:10px;
-      padding:8px 10px;
-      cursor:pointer;
-      font-size:13px;
-    }
-    button.primary{
-      background: var(--accent);
-      color:#fff;
-      border-color: var(--accent);
-    }
-    button:active{transform: translateY(1px);}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>病理组织诊断报告</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
 
-    .title{
-      text-align:center;
-      margin: 18px 0 10px;
-    }
-    .title h2{
-      margin: 6px 0 0;
-      font-size: 18px;
-      font-weight: 800;
-    }
-    .title .hospital{
-      font-size: 16px;
-      font-weight: 700;
-      margin:0;
-    }
-    .hint{
-      margin: 10px 0 0;
-      text-align:center;
-      color: var(--muted);
-      font-size: 12px;
-    }
+        h1, h2 {
+            text-align: center;
+            margin: 10px 0;
+        }
 
-    .grid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-top: 12px;
-    }
-    .card{
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 14px 14px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-    }
-    .card.full{ grid-column: 1 / -1; }
+        .info-block {
+            background: #fff;
+            margin-bottom: 12px;
+            padding: 15px 12px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
 
-    .row{
-      display:flex;
-      gap: 10px;
-      padding: 6px 0;
-      border-bottom: 1px dashed rgba(229,231,235,0.9);
-      align-items:flex-start;
-    }
-    .row:last-child{border-bottom:none;}
-    .label{
-      min-width: 110px;
-      color: #374151;
-      font-weight: 700;
-      font-size: 13px;
-      flex: 0 0 auto;
-    }
-    .value{
-      color: #111827;
-      font-size: 13px;
-      line-height: 1.5;
-      word-break: break-word;
-      white-space: pre-wrap;
-      flex: 1 1 auto;
-    }
-    .badge{
-      display:inline-block;
-      padding: 2px 8px;
-      border-radius: 999px;
-      background: #eef2ff;
-      color: #3730a3;
-      border: 1px solid #e0e7ff;
-      font-size: 12px;
-      margin-left: 6px;
-      vertical-align: middle;
-    }
-    .status{
-      margin-top: 10px;
-      font-size: 13px;
-      padding: 10px 12px;
-      border-radius: 12px;
-      border: 1px solid var(--line);
-      background: #fff;
-      color: var(--muted);
-    }
-    .status.error{
-      border-color: rgba(220,38,38,0.25);
-      background: rgba(220,38,38,0.06);
-      color: var(--danger);
-    }
+        .info-block strong {
+            display: inline-block;
+            min-width: 100px;
+            color: #555;
+        }
 
-    footer{
-      margin: 16px 0 6px;
-      text-align:center;
-      color: var(--muted);
-      font-size: 12px;
-    }
+        .info-line {
+            margin: 5px 0;
+        }
 
-    @media (max-width: 720px){
-      header{position: static;}
-      .grid{grid-template-columns: 1fr;}
-      .label{min-width: 96px;}
-      .wrap{padding: 12px;}
-    }
-
-    @media print{
-      header, .hint, .status, footer, .actions{display:none !important;}
-      body{background:#fff;}
-      .card{box-shadow:none;}
-      .wrap{max-width: 100%; padding: 0;}
-    }
-  </style>
+        @media screen and (max-width: 480px) {
+            body {
+                font-size: 16px;
+            }
+        }
+    </style>
 </head>
-
 <body>
-  <div class="wrap">
 
-    <header>
-      <div class="brand">
-        <h1>医学影像/病理报告系统（静态演示）</h1>
-        <div class="sub">GitHub Pages · 扫码打开 · 自适应展示</div>
-      </div>
-      <div class="actions">
-        <button class="primary" id="btn-print">打印/导出PDF</button>
-        <button id="btn-copy">复制当前链接</button>
-      </div>
-    </header>
+    <h1>×××××××××医院</h1>
+    <h2>病理组织诊断报告</h2>
 
-    <div class="title">
-      <p class="hospital" id="hospital-name">×××××××××医院</p>
-      <h2>病理组织诊断报告</h2>
-      <div class="hint">提示：URL 里带 ?code=xxx 即可加载对应报告。示例：?code=1001</div>
+    <div class="info-block">
+        <div class="info-line"><strong>门诊/住院号：</strong><span id="patient-id"></span></div>
+        <div class="info-line"><strong>报告号：</strong><span id="report-id"></span></div>
+        <div class="info-line"><strong>标本日期：</strong><span id="sample-date"></span></div>
     </div>
 
-    <div id="status" class="status">正在加载数据…</div>
-
-    <div class="grid" id="content" style="display:none;">
-      <div class="card">
-        <div class="row"><div class="label">门诊/住院号</div><div class="value" id="patient-id"></div></div>
-        <div class="row"><div class="label">报告号</div><div class="value" id="report-id"></div></div>
-        <div class="row"><div class="label">标本日期</div><div class="value" id="sample-date"></div></div>
-      </div>
-
-      <div class="card">
-        <div class="row"><div class="label">姓名</div><div class="value" id="patient-name"></div></div>
-        <div class="row"><div class="label">性别</div><div class="value" id="gender"></div></div>
-        <div class="row"><div class="label">检查次数</div><div class="value" id="exam-count"></div></div>
-      </div>
-
-      <div class="card">
-        <div class="row"><div class="label">科别</div><div class="value" id="department"></div></div>
-        <div class="row"><div class="label">病房</div><div class="value" id="ward"></div></div>
-        <div class="row"><div class="label">床号</div><div class="value" id="bed-number"></div></div>
-      </div>
-
-      <div class="card">
-        <div class="row"><div class="label">送检组织</div><div class="value" id="sample-tissue"></div></div>
-        <div class="row"><div class="label">电话</div><div class="value" id="phone"></div></div>
-      </div>
-
-      <div class="card full">
-        <div class="row"><div class="label">临床诊断</div><div class="value" id="clinical-diagnosis"></div></div>
-      </div>
-
-      <div class="card full">
-        <div class="row"><div class="label">检查方法</div><div class="value" id="exam-method"></div></div>
-      </div>
-
-      <div class="card full">
-        <div class="row"><div class="label">病理诊断</div><div class="value" id="pathological-diagnosis"></div></div>
-      </div>
-
-      <div class="card full">
-        <div class="row"><div class="label">诊断结论</div><div class="value" id="diagnosis-conclusion"></div></div>
-      </div>
-
-      <div class="card">
-        <div class="row"><div class="label">报告医生</div><div class="value" id="report-doctor"></div></div>
-        <div class="row"><div class="label">复核医生</div><div class="value" id="review-doctor"></div></div>
-        <div class="row"><div class="label">数据</div><div class="value" id="data"></div></div>
-      </div>
-
-      <div class="card">
-        <div class="row"><div class="label">报告状态</div><div class="value"><span id="report-status"></span><span class="badge" id="code-badge"></span></div></div>
-        <div class="row"><div class="label">最后更新</div><div class="value" id="updated-at"></div></div>
-      </div>
+    <div class="info-block">
+        <div class="info-line"><strong>姓名：</strong><span id="patient-name"></span></div>
+        <div class="info-line"><strong>性别：</strong><span id="gender"></span></div>
+        <div class="info-line"><strong>检查次数：</strong><span id="exam-count"></span></div>
     </div>
 
-    <footer>说明：本页面为 GitHub Pages 静态演示版本，可后续接入后端实现真实登录、权限、影像与报告管理。</footer>
-  </div>
+    <div class="info-block">
+        <div class="info-line"><strong>科别：</strong><span id="department"></span></div>
+        <div class="info-line"><strong>病房：</strong><span id="ward"></span></div>
+        <div class="info-line"><strong>床号：</strong><span id="bed-number"></span></div>
+    </div>
 
-  <script>
-    // --------- util ----------
-    function getCodeFromUrl(){
-      const params = new URLSearchParams(window.location.search);
-      let code = params.get("code");
-      if (!code && window.location.hash) {
-        // 支持 #code=xxx 或 #/report?code=xxx 的情况
-        const hash = window.location.hash.replace(/^#/, "");
-        const idx = hash.indexOf("code=");
-        if (idx >= 0) {
-          code = hash.substring(idx + 5).split("&")[0];
-        } else if (hash && !hash.includes("=")) {
-          // 允许直接 #1001 这种写法
-          code = hash;
+    <div class="info-block">
+        <div class="info-line"><strong>送检组织：</strong><span id="sample-tissue"></span></div>
+        <div class="info-line"><strong>电话：</strong><span id="phone"></span></div>
+    </div>
+
+    <div class="info-block">
+        <div class="info-line"><strong>临床诊断：</strong><br><span id="clinical-diagnosis"></span></div>
+    </div>
+
+    <div class="info-block">
+        <div class="info-line"><strong>检查方法：</strong><br><span id="exam-method"></span></div>
+    </div>
+
+    <div class="info-block">
+        <div class="info-line"><strong>病理诊断：</strong><br><span id="pathological-diagnosis"></span></div>
+    </div>
+
+    <div class="info-block">
+        <div class="info-line"><strong>诊断结论：</strong><br><span id="diagnosis-conclusion"></span></div>
+    </div>
+
+    <div class="info-block">
+        <div class="info-line"><strong>报告医生：</strong><span id="report-doctor"></span></div>
+        <div class="info-line"><strong>复核医生：</strong><span id="review-doctor"></span></div>
+        <div class="info-line"><strong>数据：</strong><span id="data"></span></div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+
+        if (code) {
+            document.getElementById("patient-id").innerText = `P-${code}`;
+            document.getElementById("report-id").innerText = `R-${code}`;
+            document.getElementById("sample-date").innerText = "2025-07-10";
+            document.getElementById("patient-name").innerText = `患者${code}`;
+            document.getElementById("gender").innerText = "男";
+            document.getElementById("exam-count").innerText = "1";
+            document.getElementById("department").innerText = "内科";
+            document.getElementById("ward").innerText = "病房" + code;
+            document.getElementById("bed-number").innerText = code;
+            document.getElementById("sample-tissue").innerText = "组织" + code;
+            document.getElementById("phone").innerText = "123456789" + code;
+            document.getElementById("clinical-diagnosis").innerText = "临床诊断内容 " + code;
+            document.getElementById("exam-method").innerText = "检查方法 " + code;
+            document.getElementById("pathological-diagnosis").innerText = "病理诊断 " + code;
+            document.getElementById("diagnosis-conclusion").innerText = "诊断结论 " + code;
+            document.getElementById("report-doctor").innerText = "医生" + code;
+            document.getElementById("review-doctor").innerText = "复核医生" + code;
+            document.getElementById("data").innerText = "数据" + code;
+        } else {
+            document.getElementById("patient-id").innerText = "默认ID";
+            document.getElementById("report-id").innerText = "默认报告号";
         }
-      }
-      return code ? String(code).trim() : "";
-    }
+    </script>
 
-    function safeText(v){
-      if (v === null || v === undefined) return "";
-      return String(v);
-    }
-
-    function isValidCode(code){
-      // 演示版：允许字母数字下划线短横线，1~32位
-      return /^[a-zA-Z0-9_-]{1,32}$/.test(code);
-    }
-
-    function setText(id, val){
-      document.getElementById(id).innerText = safeText(val);
-    }
-
-    function showStatus(msg, isError=false){
-      const el = document.getElementById("status");
-      el.className = isError ? "status error" : "status";
-      el.innerText = msg;
-    }
-
-    function showContent(){
-      document.getElementById("content").style.display = "";
-    }
-
-    // --------- data layer ----------
-    // 优先从 data/reports.json 拉取；找不到则回退到演示拼接
-    async function fetchReportFromJson(code){
-      // cache bust，避免 GitHub 的强缓存影响“更新后刷新”
-      const url = `./data/reports.json?ts=${Date.now()}`;
-      const resp = await fetch(url, { cache: "no-store" });
-      if (!resp.ok) throw new Error("无法加载 reports.json");
-      const json = await resp.json();
-
-      // 允许两种结构：
-      // 1) { "reports": { "1001": {...}, "1002": {...} } }
-      // 2) { "reports": [ { "code":"1001", ...}, ... ] }
-      if (json && json.reports) {
-        if (Array.isArray(json.reports)) {
-          return json.reports.find(r => String(r.code) === String(code)) || null;
-        } else if (typeof json.reports === "object") {
-          return json.reports[String(code)] || null;
-        }
-      }
-      return null;
-    }
-
-    function buildFallbackReport(code){
-      const now = new Date();
-      return {
-        code,
-        hospital_name: "×××××××××医院",
-        patient_id: `P-${code}`,
-        report_id: `R-${code}`,
-        sample_date: "2025-07-10",
-        patient_name: `患者${code}`,
-        gender: "男",
-        exam_count: "1",
-        department: "内科",
-        ward: `病房${code}`,
-        bed_number: code,
-        sample_tissue: `组织${code}`,
-        phone: `123456789${code}`,
-        clinical_diagnosis: `临床诊断内容 ${code}`,
-        exam_method: `检查方法 ${code}`,
-        pathological_diagnosis: `病理诊断 ${code}`,
-        diagnosis_conclusion: `诊断结论 ${code}`,
-        report_doctor: `医生${code}`,
-        review_doctor: `复核医生${code}`,
-        data: `数据${code}`,
-        report_status: "演示数据（fallback）",
-        updated_at: now.toISOString().slice(0,19).replace("T"," ")
-      };
-    }
-
-    function renderReport(r){
-      document.getElementById("hospital-name").innerText = safeText(r.hospital_name || "×××××××××医院");
-      setText("patient-id", r.patient_id);
-      setText("report-id", r.report_id);
-      setText("sample-date", r.sample_date);
-
-      setText("patient-name", r.patient_name);
-      setText("gender", r.gender);
-      setText("exam-count", r.exam_count);
-
-      setText("department", r.department);
-      setText("ward", r.ward);
-      setText("bed-number", r.bed_number);
-
-      setText("sample-tissue", r.sample_tissue);
-      setText("phone", r.phone);
-
-      setText("clinical-diagnosis", r.clinical_diagnosis);
-      setText("exam-method", r.exam_method);
-      setText("pathological-diagnosis", r.pathological_diagnosis);
-      setText("diagnosis-conclusion", r.diagnosis_conclusion);
-
-      setText("report-doctor", r.report_doctor);
-      setText("review-doctor", r.review_doctor);
-      setText("data", r.data);
-
-      setText("report-status", r.report_status || "—");
-      setText("updated-at", r.updated_at || "—");
-      document.getElementById("code-badge").innerText = r.code ? `code=${r.code}` : "";
-    }
-
-    // --------- main ----------
-    (async function main(){
-      const code = getCodeFromUrl();
-
-      if (!code) {
-        showStatus("未检测到 code 参数。请使用 ?code=1001 的形式访问。", true);
-        return;
-      }
-      if (!isValidCode(code)) {
-        showStatus("code 参数不合法（仅允许字母/数字/_/-，长度 1~32）。", true);
-        return;
-      }
-
-      showStatus("正在加载报告数据…");
-      let report = null;
-
-      try {
-        report = await fetchReportFromJson(code);
-      } catch (e) {
-        // JSON 文件不存在或无法加载，继续 fallback
-      }
-
-      if (!report) {
-        report = buildFallbackReport(code);
-        showStatus("未在 reports.json 中找到对应数据，已使用演示数据加载。你可以在 data/reports.json 中补充该 code 的真实内容。");
-      } else {
-        report.code = code;
-        showStatus("加载成功。");
-      }
-
-      renderReport(report);
-      showContent();
-    })();
-
-    // --------- actions ----------
-    document.getElementById("btn-print").addEventListener("click", () => window.print());
-    document.getElementById("btn-copy").addEventListener("click", async () => {
-      const url = window.location.href;
-      try{
-        await navigator.clipboard.writeText(url);
-        showStatus("链接已复制到剪贴板。");
-      }catch(e){
-        // 兼容不支持 clipboard 的浏览器
-        const t = document.createElement("textarea");
-        t.value = url;
-        document.body.appendChild(t);
-        t.select();
-        document.execCommand("copy");
-        document.body.removeChild(t);
-        showStatus("链接已复制（兼容模式）。");
-      }
-    });
-  </script>
 </body>
 </html>
